@@ -1,0 +1,109 @@
+Code_Site;Site_Name;lat;long;type of site;exact location
+BGI_S001;AÈroport;4.39711463562374;18.5272680136985;other;
+BGI_S002;Communaute des ApÙtres de Jesus CrucifiÈ / Centre de Sante Padre Pio;4.34953325000236;18.5206669624847;health centre/hospital;Bimbo
+BGI_S003;Archeveche - St Paul - Paroisse;4.37103251848237;18.6094638761225;religious_building;7eme arrondissement
+BGI_S004;Binuca;4.36667873117258;18.5527714596327;UN;2eme arrondissement
+BGI_S005;Cathedrale Notre Dame;4.37052614616934;18.5777725754255;religious_building;1er arrondissement Ville
+BGI_S006;Fraternite des petites soeurs du coeur de Jesus;4.4321355;18.53961;religious_building;Ombela Mpoko Bimbo 2 PK10
+BGI_S009;Don Bosco / Damala;4.40464110752145;18.5317109328621;religious_building;Ombela Mpoko Damala
+BGI_S010;Ecole Sabangele -Quartier Zako;;;school;Bimbo 2 PK13
+BGI_S011;Eglise des FrËres Castors;4.37667004156725;18.5485102341563;religious_building;3 ARRONDISSEMENT
+BGI_S013;Eglise Elimes de Bangui-Mpoko;4.38217074414202;18.5461105057684;religious_building;5 ARRONDISSEMENT/BAIDI
+BGI_S014;Eglise Notre Dame d'Afrique;4.39790016140453;18.5582040595854;religious_building;4 eme arrondissement
+BGI_S015;Eglise Notre de Dame de Fatima;4.36463270415322;18.536601961878;religious_building;3 ARRONDISSEMENT FATIMA
+BGI_S016;Eglise St Pierre de Gombongo;4.41946389481978;18.5503872373891;religious_building;4 ARRONDISSEMENT/GOBONGO
+BGI_S017;Faculte de Theologie (FATEB);4.37325658373089;18.5646784490291;school;2eme arrondissement
+BGI_S018;Fondation Humanisme;;;other;7eme arrondissement
+BGI_S020;Grand sÈminaire St Marc de Bimbo;4.33792450484305;18.5320811550003;religious_building;Ombela M'poko
+BGI_S021;Grande Ecole Islamique;4.37967865618845;18.538309616202;school;3eme arrondissement PK 5
+BGI_S022;Hopital ACABEF;4.39731951145406;18.5579892274552;health centre/hospital;4eme arrondissement
+BGI_S024;Hopital Amitié;4.40944067918362;18.5542193061503;health centre/hospital;4ème Quartier fou Bangui
+BGI_S025;Hopital Comunautaire;4.38804607536882;18.5574298976102;health centre/hospital;5eme arrondissement
+BGI_S026;LycÈe Ama;4.48020710276825;18.5015706221555;school;4eme arrondissement Boy-Rabe
+BGI_S028;Centre de SantÈ Guitangola;4.353284801894;18.531139142408;other;Ombela Mpoko Bimbo3 Guitangola.
+BGI_S029;Mission Carmel;4.3500077746735;18.5121446837636;religious_building;BIMBO/CARMEL/PLATEU
+BGI_S030;Mission St Charles Luanga;4.35921432841101;18.564827722256;religious_building;Bimbo 2 OMBELLA MPOKO
+BGI_S031;Monastère de Boy-Rabe;4.40369525110961;18.5733343124407;religious_building;4 ARRONDISSEMENT
+BGI_S032;MosquÈ Ali Babolo;4.37078036164017;18.5380366450211;religious_building;3eme arrondissement PK 5 Doungia
+BGI_S033;Fondation Voix du CÏur;4.36466862296099;18.571761799782;other;2ème arrondissement SICA I
+BGI_S034;Paroisse Sainte Trinité des Castors;4.37682021861228;18.5482906945112;religious_building;3 ARRONDISSEMENT/BANGUI
+BGI_S035;Paroisse St Bernard;4.39854618927934;18.5660250925997;religious_building;4eme Arrondissement Boy-Rabe
+BGI_S036;PK5 - communautés d'accueil;4.37405755;18.538087;host families;3 eme arrondissement
+BGI_S038;Saint Antoine de Padoue;4.33017993588909;18.5298564299949;religious_building;OMBELLA MPOKO/BIMBO
+BGI_S039;Saint Jean de Galabadja;4.41470865268185;18.5400632799663;religious_building;8eme arrondissement
+BGI_S040;Sainte Marie;;;religious_building;
+BGI_S041;St Joseph de Mukassa;4.36841137637485;18.5244567986388;religious_building;3 ARRONDISSEMENT/DAMECA/BANGUI/BIMBO
+BGI_S042;St Mathias;4.37694217590886;18.5354531269865;religious_building;3 eme arrondissement
+BGI_S043;St. Anne;4.38299436056658;18.6046995854998;religious_building;7 eme arrondissement
+BGI_S044;St. Jacques de Kpetene;4.36485999681403;18.5455600532004;religious_building;6 eme arrondissement
+BGI_S045;Saint Michel de Bazanga;4.385884;18.547663;religious_building;Bangui M'poko 5ème arrondissement Bazanga
+BGI_S046;Village Ngbaloko;;;host families;
+BGI_S047;Village SOS Enfants Ouango;4.367123368829;18.6242514217204;other;7ème arrondissement Ombella M'Po Bangui Village Ngbangouma
+BGI_S048;Village Zacko;;;host families;
+BGI_S049;St Paul - Communauté des Soeurs;4.370474;18.611387;religious_building;7 ARRONDISSEMENT BANGUI
+BGI_S050;St Paul - SÈminaire;4.370576;18.609525;religious_building;7 eme arrondissement
+BGI_S051;St Paul - LycÈe Pi XII;4.371400;18.61019;religious_building;7 ARRONDISSEMENT/LYCEE PI XII/BANGUI
+BGI_S052;Ecole Ama;;;school;Bimbo 2 PK16
+BGI_S053;Quartier Votongbo2;4.399477;18.573318;host families;4eme arrondissement Boy Rabe
+BGI_S054;Consession des pretres de SMA;;;religious_building;Bimbo
+BGI_S056;Orphelinat ASA - famille d'acceuil;;;host families;6 eme arrondissement
+BGI_S057;Camp FOMAC;4.402968;18.541342;other;7ème arrondissement Ouango
+BGI_S058;Communaute d'accueil Pere Lazariste;4.37158;18.61385;host families;7ème arrondissement OUANGO
+BGI_S059;Mosquee Central;4.379187;18.538112;religious_building;3eme arrondissement Quartier Senegalais
+BGI_S060;Hopital des Castors;4.377700;18.54811;health centre/hospital;3eme Castorse Bangui
+BGI_S061;Orphelinat APEESA;;;other;6eme arrondissement
+BGI_S062;Ecole Islamique PK5 Ecole Francoarabe Nasradin;;;school;3eme arrondissement KM 5
+BGI_S063;Monastere St Pierre Celestin;;;religious_building;Bimbo
+BGI_S064;PK 5 Mosquee Mali Maka;;;religious_building;5 eme arrondisement Quartier edville
+BGI_S065;Ex-Base Aerienne;4.409100;18.5213;other;Airport
+BGI_S066;Guitangola Source (eglise);;;religious_building;BIMBO 3 GUITANGOLA SOURCE
+BGI_S067;St Sauveur;4.373907;18.560948;religious_building;2èm_ Arrondissement Quartier SICA 2
+BGI_S068;Centre Jean 23;4.372353;18.560206;health centre/hospital;2eme arrondissement Bangui ˆ cot_ de la paroisse Saint Sauveur
+BGI_S069;Eglise Four Square;4.384552;18.554626;religious_building;5 eme arondossement Benz-Vi
+BGI_S070;Soeur De Malgash / Nzila;;;host families;Nzila
+BGI_S072;Action pour la Compassion;;;religious_building;5 eme
+BGI_S073;Eglise Chapel de vainqueur;4.384145;18.559423;host families;1ere
+BGI_S076;Guitangola Famille d'acceuil;;;religious_building;Bimbi
+BGI_S077;St Francois D'Assise;4.361412;18.555507;religious_building;6eme arrondissement
+BGI_S078;St Famille;;;other;4eme
+BGI_S079;Maison micheline;4.327524;18.534811;ONG;bimbo
+BGI_S080;Pere Comboniens / St Joseph de Bimbo;4.341504;18.529627;religious_building;Bimbo
+BGI_S081;SECA (Siege Caritas);4.340188;18.528561;ONG;Bimbo
+BGI_S082;PK 5 Fulbe;;;host families;3eme
+BGI_S083;Eglise Evangelique Lutherienne;4.403382;18.527622;religious_building;8eme
+BGI_S084;Lycee des Marthyrs;4.372666;18.561883;school;2eme
+BGI_S085;OUHAM2/GUIDA;;;host families;3eme
+BGI_S086;ASECNA - Article 10;4.398751;18.528118;administrational building;5eme
+BGI_S087;Communaute d'accueil 5e Arrondissement;;;host families;5eme
+BGI_S088;Mosquee Oumou Mubarak Ba/Moustapha;;;religious_building;3eme
+BGI_S089;Ecole St Charles;4.360539;18.563723;school;2eme
+BGI_S090;Marche Sambo;4.373867;18.538342;public institution;3eme
+BGI_S091;;;;;
+BGI_S092;Mosque Rumah;;;church/mosque/religious institution/ parish;5eme
+BGI_S093;Ecole Communautaire Francoarabe Alacam;;;school;5eme
+BGI_S094;Mission Evangelique de Freres;;;church/mosque/religious institution/ parish;3eme
+BGI_S095;Famille Camerounais Norte;;;host families;3eme
+BGI_S096;jehova Sica 2;;;church/mosque/religious institution/ parish;2eme
+BGI_S097;Jehova Combattant;;;church/mosque/religious institution/ parish;8eme
+BGI_S098;Capucins;4.339187;18.528079;church/mosque/religious institution/ parish;Bimbo
+BGI_S099;Dana;;;host families;Bimbo
+BGI_S100;Bossambo;;;host families;Bimbo
+BGI_S101;Eglise Adventiste;4.360500;18.48351;church/mosque/religious institution/ parish;3eme
+BGI_S102;Complex Scolaire Adventiste;4.369073;18.551994;school;3eme
+BGI_S103;Complexe Pédagogique Bethanie;4.37071;18.56419;school;
+BGI_S104;Sanctuaire du Benzvi;;;school;5eme
+BGI_S106;;;;;
+BGI_S107;;;;;
+BGI_S108;;;;;
+BGI_S108;Centre d'Accueil Soeur Catholique;;;church/mosque/religious institution/ parish;2eme
+BGI_S109;MarchÈ Yaloa;;;;
+BGI_S110;;;;;
+BGI_S111;ND Chartres;;;church/mosque/religious institution/ parish;6eme
+BGI_S117;Ecole Koudoukou;4.378639;18.536378;school;3eme
+BGI_S114;Eglise Apostolique Gbere;;;church/mosque/religious institution/ parish;8eme
+BGI_S113;MarchÈ Yaloa;;;Private;3eme
+BGI_S119;Eglise Apostolique Gbere;;;;
+BGI_S120;Mission d'Evangelisaion pour le salut du Monde (MESM);4.370436;18.551854;;
+BGI_S121;Eglise Catholique Orthodox;4.322001;18.510442;;
+BGI_S122;Ecole Marternelle du 3ème Arrondissement;4.37414;18.537003;;
+BGI_S123;Eglise EvangÈlique Baptiste Emmanuelle;4.36266;18.543636;;

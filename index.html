@@ -1,0 +1,561 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
+    <title>DTM | Bangui</title>
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <link type="text/css" href="css/leaflet.css" rel="stylesheet"/>
+    <link type="text/css" href="css/leaflet.markercluster.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" href="css/dc.css">
+
+    <style>
+      #map {
+        margin-left: 15px;
+        width:70%;
+        height:600px;
+      }
+      #data {
+        width:270px;
+        height:600px;
+        color:black;
+        /*background-color: #3d3d3d;*/
+        overflow-y: auto;
+
+      }
+
+      #infosite{
+        width:270px;
+        height:600px;
+        color:black;
+        /*background-color: #3d3d3d;*/
+        overflow-y: auto;
+      }
+
+      #headerbox{
+        height: 30px;
+        
+      }
+      /*  a{
+        color:#C0392B;
+      }
+      a:hover{
+        color:#C0392B;
+      }*/
+      .info{
+        color:#120029;
+      }
+      .dc-chart .grid-line {
+        fill: none;
+        stroke: #ffffff;
+        opacity: 0.5;
+        shape-rendering: crispedges;
+      }
+      .dc-chart .axis path, .axis line {
+        fill: none;
+        stroke: #ffffff;
+        shape-rendering: crispedges;
+    }
+
+
+  .legend{
+      width: 150px;
+      padding: 6px 10px;
+      font: 14px/16px Arial, Helvetica, sans-serif;
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+  }
+  #legendTitle {
+      text-align: left;
+      margin-bottom: 15px;
+      font-variant: small-caps;
+  }
+  .symbolsContainer {
+      float: left;
+    margin-left: 50px;
+  }
+  .legendCircle {
+       border-radius:50%; 
+       border: 1px solid #3d3d3d; 
+       background: rgba(255, 255, 255, 0);
+     display: inline-block;
+  }
+  .legendValue {
+      position: absolute;
+      right: 8px;
+      font-size: 12px;
+  }
+
+
+    </style>
+
+</head>
+
+
+<body>
+    <div class="container">
+      <p id="title"><h3><span style="color:#C0392B">DRAFT  </span><img src="image/logos.png" height=40 align="bottom"></h3></p>
+                <div >
+                    <h4>Suivi des personnes déplacées internes (PDI) à Bangui <small><a href="https://github.com/iomrowca/dtm_bangui/archive/master.zip">Telecharger la version OFFLINE de la carte</a></small></h4>
+                    <div class="row">
+                      <div id="map" class="col-md-2"></div>
+                      <div id="info" style="display:none">
+                        <div id="data"class="col-md-3">
+                          <div id='numbertot'><span><small>Total PDI : </small></span></div>
+                          <div id='numbertot_bfsept'><span><small>Total PDI avant sept 2015: </small></span></div>
+                          <div id='numbertot_afsept'><span><small>Total PDI après sept 2015: </small></span></div>
+                          <hr><br>
+                          <span><small>Tendance </small></span><span id ="reset"><small><a>(Reset)</a></small></span><div id='evolution'></div>
+                          <hr><span style="font-style:italic"><small>Les sites en évidence sur la carte par un clignotement requièrent votre  attention</small></span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--<div id="timeline"><h4><span class="filter"></span></h4></div>-->
+                </div>
+        <br>
+        <br>
+        <br>
+        
+    </div>
+    
+
+    <script type="text/javascript" src="js/intro.js"></script>
+    <script type="text/javascript" src="js/d3_002.js"></script>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <script type="text/javascript" src="js/crossfilter.js"></script>
+    <script type="text/javascript" src="js/dc.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/leaflet.js"></script>
+    <script type="text/javascript" src="js/tabletop.js"></script>
+
+
+<script type="text/javascript">
+
+//window.onload = function() { init() };
+  
+  // var poi_bangui    = 'https://docs.google.com/spreadsheets/d/1W2zayEHo0HCXmSs0e77qiSABYpRiNJmtAnBKZDXGhRs/pubhtml';
+  //   function init() {
+  //     Tabletop({
+  //         key: poi_bangui,
+  //         callback: showInfo,
+  //         simpleSheet: false
+  //     });   
+  //   };
+   
+  // function showInfo(datag, tabletop) {
+  //   //Get all the data form the tabs in 3 arrays.
+  //   evol = datag.Evol;
+  //   data = evol.elements;
+  //   poi_gp = datag.POI; 
+  //   poi = poi_gp.elements;
+  //   needss=datag.Needs;
+    //needs=needss.elements;
+
+$("#data").prepend("<br><small>Cliquer sur un site pour avoir le detail des besoins humanitaires</small><br><hr>");
+
+  scsv = d3.dsv(';', "text/plain; charset=UTF-8");
+
+    scsv("data/needs.csv", function(needs) {
+    
+    scsv("data/bangui_poi.csv", function(poi) {
+  
+    $("#info").css("display","block") 
+
+    console.log(needs)
+    //Add the lat and Long to the needs:
+    needs.forEach(function(need_camp) {
+
+      var chaincheck = need_camp.Tendency,
+      dimi="Diminution",
+      aug ="Augmentation",
+      sta ="Stable"
+      if(chaincheck.indexOf(dimi) > -1){need_camp.Evolution="Diminution"}
+      else if(chaincheck.indexOf(aug) > -1){need_camp.Evolution="Augmentation"}
+      else if(chaincheck.indexOf(sta) > -1){need_camp.Evolution="Stable"}
+      else{need_camp.Evolution="Autre"}
+      //else{need_camp.Tendency="Other"}
+
+      var resjoin = poi.filter(function(p) {
+        return  need_camp.Code_Site == p.Code_Site
+      });
+      
+
+      need_camp.blink = (need_camp["En evidence"] == "oui") ? "oui" : null;
+      need_camp.lat = (resjoin[0] !== undefined) ? resjoin[0].lat : null;
+      need_camp.lng = (resjoin[0] !== undefined) ? resjoin[0].long : null;
+      need_camp.geo =  (resjoin[0] !== undefined) ? resjoin[0].lat +","+resjoin[0].long : null;
+      need_camp.label =  (resjoin[0] !== undefined) ? need_camp["Nom des Sites"]+","+resjoin[0].lat +","+resjoin[0].long+","+resjoin[0].Code_Site+","+need_camp['Total des PDIs']+","+need_camp["En evidence"]+","+need_camp.Evolution : "Unknow,0,0,Unknow,Unknow,Unknow,Unknow";
+      
+    });
+    
+
+    numbertot       = dc.numberDisplay("#numbertot");
+    numbertot_bfsept = dc.numberDisplay("#numbertot_bfsept");
+    numbertot_afsept = dc.numberDisplay("#numbertot_afsept");
+    evolutionChart  = dc.rowChart("#evolution");
+
+
+    var dateFormat = d3.time.format("%d/%m/%Y");
+
+
+    
+    var ndx = crossfilter(needs);
+
+    var location_tot    = ndx.dimension(function(d) { return d.geo; });
+    var names_tot       = ndx.dimension(function(d) { return d.label; });
+    var idp =  ndx.dimension(function(d) { return d['Total des PDIs'] });
+    var nametotGroup = names_tot.group().reduceSum(function(d) { return d['Total des PDIs'] ; });
+
+
+    
+    
+    totalidp_DimGroup = ndx.groupAll().reduce(function (p, v) { ++p.n;p.tot += +v['Total des PDIs'] ; return p;},function (p, v) {--p.n;p.tot -= +v['Total des PDIs'] ;return p;},function () { return {n:0,tot:0}; });
+    
+    totalidpavtspet_DimGroup = ndx.groupAll().reduce(function (p, v) { ++p.n;p.tot += +v['Nombre de Population avant la crise du 26 Septembre 2015'] ; return p;},function (p, v) {--p.n;p.tot -= +v['Nombre de Population avant la crise du 26 Septembre 2015'] ;return p;},function () { return {n:0,tot:0}; });
+
+    totalidpaprspet_DimGroup = ndx.groupAll().reduce(function (p, v) { ++p.n;p.tot += +v['Nombres des PDIs ajouté aprèss la crise'] ; return p;},function (p, v) {--p.n;p.tot -= +v['Nombres des PDIs ajouté aprèss la crise'] ;return p;},function () { return {n:0,tot:0}; });
+    //Nombres des PDIs ajouté aprèss la crise
+
+    var total_Dim = function(d) { return +d.tot};
+    var total_sites = function(d) { return +d.n};
+
+    numbertot.group(totalidp_DimGroup).valueAccessor(total_Dim).formatNumber(d3.format(",.0f"));
+    numbertot_bfsept.group(totalidpavtspet_DimGroup).valueAccessor(total_Dim).formatNumber(d3.format(",.0f"));
+    numbertot_afsept.group(totalidpaprspet_DimGroup).valueAccessor(total_Dim).formatNumber(d3.format(",.0f"));
+    //EVOLUTION
+    
+    var evolutionDim   = ndx.dimension(function(d) { return d.Evolution; });
+    var evolutiongroup = evolutionDim.group();
+
+    evolutionChart
+          .width(235)
+          .height(270)
+          .margins({top: 10, right: 0, bottom: 0, left: 0})
+          .dimension(evolutionDim)
+          .group(evolutiongroup)   //.x(d3.time.scale())
+          .colors(['#d7191c','#636363','#33a02c','#1f78b4'])
+          .label(function (d) {
+            var label = d.key + " : "+d.value + " sites";
+            return label;
+          })
+    
+        evolutionChart.renderlet(function(chart){
+            //chart.selectAll("text")
+            //.style("fill", "#000")
+            //.ticks(d3.time.days,7)
+        });
+
+
+
+      var info = L.control({
+        position: 'topright'
+      }); //, shown: false }); // { position: 'bottomleft' }
+
+      info.onAdd = function(map) {
+
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                //this.options.shown = true;
+        this.update();
+        return this._div;
+      };
+
+      info.update = function(wpaTitle) {
+            this._div.innerHTML = (wpaTitle ?
+              '<b>' + wpaTitle + '</b>' : 'Hover over a Wathab Project');
+
+      };
+
+
+function resetColors() {
+    for (var i = 0; i < map._layers; i++) {
+        layers[i].properties['marker-color'] = geoJson[i].properties['old-color'] ||
+            geoJson[i].properties['marker-color'];
+    }
+    //myLayer.setGeoJSON(geoJson);
+}
+
+
+function updateMapPoints() {
+
+
+        
+        wpaCluster.clearLayers();
+        
+        
+
+        var markerList = [];
+
+        nametotGroup.top(Infinity).forEach(function(p) {
+
+
+          var latlng = p.key.split(",");
+
+          var name = (latlng[0] !== undefined) ? latlng[0] : null; 
+          var lat = (latlng[1] !== "") ? latlng[1] : "0"; 
+          var lng = (latlng[2] !== "") ? latlng[2] : "0"; 
+          var ssid = (latlng[3] !== "") ? latlng[3] : null; 
+          var ndidp = (latlng[4] !== "") ? latlng[4] : null; 
+          var blink = (latlng[5]!=="") ? latlng[5] : null;
+          var tend = (latlng[6]!=="") ? latlng[6] : null;
+          
+
+          if(blink=="oui"){
+            if(tend=="Augmentation"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#d7191c",color:"#d7191c",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"Bra"}); // in lat-long
+            }
+            else if (tend =="Diminution"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#33a02c",color:"#33a02c",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"Bra"}); // in lat-long
+            }
+            else if (tend =="Autre"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#636363",color:"#636363",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"Bra"}); // in lat-long
+            }
+            else if (tend =="Stable"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#1f78b4",color:"#1f78b4",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"Bra"}); // in lat-long
+            }
+          }
+
+          else if (blink !=="oui"){
+          
+            if(tend=="Augmentation"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#d7191c",color:"#d7191c",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"no-Bra"}); // in lat-long
+            }
+            else if (tend =="Diminution"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#33a02c",color:"#33a02c",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"no-Bra"}); // in lat-long
+            }
+            else if (tend =="Autre"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#636363",color:"#636363",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"no-Bra"}); // in lat-long
+            }
+            else if (tend =="Stable"){
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#1f78b4",color:"#1f78b4",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"no-Bra"}); // in lat-long
+            }
+
+            else if (tend !=="Augmentation"||tend !=="Diminution"||tend !=="Autre"||tend !=="Stable")
+              {
+              var wpaMarker = L.circleMarker([lat,lng], { weight:1,opacity:0.7,fillColor: "#1f78b4",color:"#1f78b4",radius: Math.sqrt(p.value)/Math.sqrt(2000)*20,className:"no-Bra"}); // in lat-long
+            }
+
+          }
+
+            wpaMarker.on('mouseover',function (e) {
+
+              info.addTo(map);
+              info.update(name + " : "+ p.value +" PDI");
+              
+            });
+          
+            wpaMarker.on('mouseout',function (e) {
+              info.update();
+              info.removeFrom(map);
+              //info.options.shown = false;
+            });
+          
+            wpaMarker.on('click',function (e) {
+              //console.log(e.target._path.attributes);
+              //var stroke_w = e.target._path.attributes;
+              //stroke_w[5].value=5;
+              //lay = map._layers[23]._layers;
+              //console.log(e);
+  
+
+              //stroke_w.getNamedItem(name)
+              $("#data").hide();
+              $("#profile_url").remove();
+              $("#infosite").remove();
+
+              //$("#info").css("width","270px");
+
+              var needresult = needs.filter(function(p) {
+                  return p.Code_Site === ssid;
+              });
+
+              console.log(needresult)
+
+              $("#info").append("<div id='infosite'class='col-md-3'><div id ='headerbox'><svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px'viewBox='-79 24.3 312 76' enable-background='new -79 24.3 312 76' xml:space='preserve'><g><g><g><path fill='#3d3d3d' d='M193.5,82.5c-11.2,0-20.2-9.1-20.2-20.2s9.1-20.2,20.2-20.2c11.2,0,20.2,9.1,20.2,20.2S204.7,82.5,193.5,82.5z M193.5,46.5c-8.7,0-15.7,7.1-15.7,15.7S184.8,78,193.5,78c8.7,0,15.7-7.1,15.7-15.7S202.2,46.5,193.5,46.5z'/></g><polygon fill='#3d3d3d' points='204.1,54.9 200.9,51.7 193.5,59.1 186.1,51.7 182.9,54.9 190.3,62.3 182.9,69.7 186.1,72.9 193.5,65.5 200.9,72.9 204.1,69.7 196.7,62.3'/></g></g></svg></div><div id='profile_url'></div></div>");
+              
+
+              // get the info profiles
+              profile = (needresult[0] !== undefined) ? needresult[0]["profil url"] : null;
+              //var profile = needresult[0]["profil url"];
+              //console.log(profile);
+               $("#profile_url").append("<small><a href='"+profile+"' target='_blank'>Lien vers le profile du camp</a></small><hr>");
+
+              delete needresult[0]["label"]
+              delete needresult[0]["geo"]
+              delete needresult[0]["lng"]
+              delete needresult[0]["lat"]
+              delete needresult[0]["blink"]
+
+              $.each(needresult[0], function( key, value ) {
+                $("#infosite").append("<small>"+key+ " : " + value +"</small><hr>");
+              }); 
+
+              $("#headerbox").on("click", function(){
+                $("#infosite").hide();
+                $("#data").show();
+              });
+          
+            },function (e) {
+              var stroke_w = e.target._path.attributes;
+              stroke_w[5].value=2;
+            });
+
+
+          markerList.push(wpaMarker);          
+          wpaCluster.addLayer(wpaMarker);
+
+
+        });
+        
+      map.addLayer(wpaCluster);
+
+  };
+
+ 
+  $('#reset').on('click', function (){
+    dc.filterAll();
+    dc.redrawAll();
+    return false;
+  })
+
+
+  dc.renderAll();
+
+
+   var OpenStreetMap_HOT = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+       maxZoom: 19,
+       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+   });
+
+   var imageUrl = 'image/bangui_map.png',
+    imageBounds = [[4.5193,18.40957 ], [4.2854,18.7103]];
+
+  var offlineimage = L.imageOverlay(imageUrl, imageBounds);
+
+   var map = L.map('map',{maxZoom: 18,minZoom:12, layers: offlineimage,maxBounds: imageBounds}).fitBounds(imageBounds);
+
+   wpaCluster = L.featureGroup();
+   map.addLayer(wpaCluster);
+
+
+  updateMapPoints();
+  
+
+
+  for (var i = 0; i < dc.chartRegistry.list().length; i++) {
+      var chartI = dc.chartRegistry.list()[i];
+      chartI.on("filtered", function(chart, filter){ 
+        dc.redrawAll();
+        updateMapPoints();
+      });
+  }
+  
+
+    createLegend(250,10000);
+
+  function calcPropRadius(attributeValue) {
+
+    var scaleFactor = 48,
+      area = attributeValue * scaleFactor;
+
+    return Math.sqrt(area/Math.PI);
+
+  } // end calcPropRadius 
+
+  function createLegend(min, max) {
+    
+    console.log(min, max)
+
+    if (min < 10) {
+      min = 10;
+    }
+
+    function roundNumber(inNumber) {
+
+          return (Math.round(inNumber/10) * 10);
+    }
+
+    var legend = L.control( { position: 'bottomleft' } );
+
+    legend.onAdd = function(map) {
+
+      var legendContainer = L.DomUtil.create("div", "legend");
+      var symbolsContainer = L.DomUtil.create("div", "symbolsContainer");
+      var classes = [roundNumber(min), roundNumber((max-min)/2), roundNumber(max)];
+      var legendCircle;
+      var lastRadius = 0;
+      var currentRadius;
+      var  margin;
+
+      L.DomEvent.addListener(legendContainer, 'mousedown', function(e) {
+        L.DomEvent.stopPropagation(e);
+      });
+
+      $(legendContainer).append("<h4 id='legendTitle'>Nombre de PDI</h4>");
+
+      for (var i = 0; i <= classes.length-1; i++) {
+
+        legendCircle = L.DomUtil.create("div", "legendCircle");
+
+        //currentRadius = calcPropRadius(classes[i]);
+        currentRadius = Math.sqrt(classes[i])/Math.sqrt(2000)*20
+        console.log(currentRadius)
+
+        margin = -currentRadius - lastRadius - 2;
+
+        $(legendCircle).attr("style", "width: " + currentRadius*2 +"px; height: " + currentRadius*2 + "px; margin-left: " + margin + "px" );
+
+        $(legendCircle).append("<span class='legendValue'>"+classes[i]+"<span>");
+
+        $(symbolsContainer).append(legendCircle);
+
+        lastRadius = currentRadius;
+
+      }
+
+      $(legendContainer).append(symbolsContainer);
+
+      return legendContainer;
+
+    };
+
+    legend.addTo(map);
+  } // end createLegend()
+
+
+  
+blink1 = {"done":"yes"};
+
+  function move(){
+
+    if (blink1.done == "yes"){
+
+            d3.selectAll(".Bra").transition().duration(500).attr("stroke-width",1);//.attr("stroke-opacity", i)
+            blink1.done = "no"
+      }
+    else if (blink1.done == "no"){
+
+          d3.selectAll(".Bra").transition().duration(500).attr("stroke-width",3);//.attr("stroke-opacity", i)
+          blink1.done = "yes"
+    }
+  };
+
+setInterval(move,500)
+
+
+});
+});
+
+</script>
+
+ <script src="js/bootstrap.js"></script>
+
+
+</body>
+
+
+</html>
